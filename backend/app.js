@@ -12,6 +12,8 @@ const auth = require('./middlewares/auth');
 const NotFoundError = require('./errors/NotFoundError');
 const errorHandler = require('./middlewares/errorHandler');
 
+require('dotenv').config();
+
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
@@ -24,7 +26,7 @@ const app = express();
 
 mongoose.set('strictQuery', true);
 mongoose.connect('mongodb://localhost:27017/mestodb', {
-  useNewUrlParser: true,
+  useNewUrlParser: true, autoIndex: true, useUnifiedTopology: true,
 });
 
 app.use(limiter);
