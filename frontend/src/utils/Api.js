@@ -4,15 +4,6 @@ class Api {
     this._headers = headers;
   }
 
-  _getHeaders() {
-    const token = localStorage.getItem('jwt');
-    return {
-      'Authorization': `Bearer ${token}`,
-      'Accept': "application/json",
-      ...this._headers,
-    }
-  }
-
   _checkResponse(res) {
     if(res.ok) {
       return res.json();
@@ -29,21 +20,21 @@ class Api {
     return this._request(`${this._baseUrl}/users/me`, {
       method: 'GET',
       credentials: 'include',
-      headers: this._getHeaders()});
+      headers: this._headers});
   }
 
   getCards() {
     return this._request(`${this._baseUrl}/cards`, {
       method: 'GET',
       credentials: 'include',
-      headers: this._getHeaders()});
+      headers: this._headers});
   }
 
   addCard(data) {
     return this._request(`${this._baseUrl}/cards`, {
       method: 'POST',
       credentials: 'include',
-      headers: this._getHeaders(),
+      headers: this._headers,
       body: JSON.stringify({
         name: data.name,
         link: data.link
@@ -54,7 +45,8 @@ class Api {
   editUserInfo(data) {
     return this._request(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
-      headers: this._getHeaders(),
+      credentials: 'include',
+      headers: this._headers,
       body: JSON.stringify({
         name: data.name,
         about: data.about
@@ -65,7 +57,7 @@ class Api {
   deleteCard(cardId) {
     return this._request(`${this._baseUrl}/cards/${cardId}`, {
       method: 'DELETE',
-      headers: this._getHeaders(),
+      headers: this._headers,
     });
   }
 
@@ -73,19 +65,20 @@ class Api {
     if(!isLiked) {
       return this._request(`${this._baseUrl}/cards/${cardId}/likes`, {
         method: 'PUT',
-        headers: this._getHeaders(),
+        headers: this._headers,
       });
     }
     return this._request(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: 'DELETE',
-      headers: this._getHeaders(),
+      headers: this._headers,
     });
   }
 
   changeAvatar(data) {
     return this._request(`${this._baseUrl}/users/me/avatar`, {
       method: 'PATCH',
-      headers: this._getHeaders(),
+      credentials: 'include',
+      headers: this._headers,
       body: JSON.stringify({
         avatar: data.avatar,
       })
@@ -97,6 +90,7 @@ export const api = new Api({
   url: 'http://api.igmesto.nomoredom.nomoredomainsclub.ru',
   headers: {
     // authorization: '2ca56f07-fcb4-4986-82c9-567bd5155cbe',
+    "Authorization": `Bearer ${localStorage.getItem('jwt')}`,
     'Content-Type': 'application/json',
   }
 })

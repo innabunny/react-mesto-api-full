@@ -38,14 +38,14 @@ class AuthApi {
       .then(res => this._checkResponse(res));
   }
 
-  checkToken(token) {
+  checkToken(jwt) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: 'GET',
       credentials: 'include',
       headers: {
         'Accept': "application/json",
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
+        'Authorization': `Bearer ${jwt}`,
       }
     })
       .then(res => this._checkResponse(res));
