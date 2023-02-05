@@ -36,12 +36,12 @@ class AuthApi {
       .then(res => this._checkResponse(res));
   }
 
-  checkToken(jwt) {
+  checkToken(token) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${jwt}`
+        'Authorization': `Bearer ${token}`
       }
     })
       .then(res => this._checkResponse(res));
@@ -49,6 +49,6 @@ class AuthApi {
 
 }
 
-const authApi = new AuthApi('https://api.igmesto.nomoredom.nomoredomainsclub.ru');
+const authApi = new AuthApi('http://api.igmesto.nomoredom.nomoredomainsclub.ru');
 
 export default authApi;

@@ -172,9 +172,9 @@ function App() {
       })
   }
   function tokenCheck() {
-    if(localStorage.getItem('jwt')) {
-      const jwt = localStorage.getItem('jwt');
-      authApi.checkToken(jwt)
+    const token = localStorage.getItem('token');
+    if (token) {
+      authApi.checkToken(token)
         .then((res) => {
           if(res) {
             setLoggedIn(true);
