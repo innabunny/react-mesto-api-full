@@ -105,7 +105,7 @@ class Api {
 }
 
 export const api = new Api({
-  url: baseUrl,
+  url: 'https://igmesto.nomoredomainsclub.ru',
   headers: {
     // authorization: '2ca56f07-fcb4-4986-82c9-567bd5155cbe',
     'Content-Type': 'application/json'

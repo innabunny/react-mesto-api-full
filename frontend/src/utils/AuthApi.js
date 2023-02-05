@@ -49,6 +49,6 @@ class AuthApi {
 
 }
 
-const authApi = new AuthApi(baseUrl);
+const authApi = new AuthApi('https://igmesto.nomoredomainsclub.ru');
 
 export default authApi;
