@@ -161,7 +161,7 @@ function App() {
   function handleAuthorization(data) {
     authApi.loginUser(data.email, data.password)
       .then((res) => {
-        localStorage.setItem('token', res.token);
+        localStorage.setItem('jwt', res.token);
         localStorage.setItem('email', data.email);
         setEmail(data.email);
         setLoggedIn(true);
@@ -193,7 +193,7 @@ function App() {
   }, [])
 
   function signOut() {
-    localStorage.removeItem('token');
+    localStorage.removeItem('jwt');
     localStorage.removeItem('email');
     setEmail('');
     history.push('/sign-in');
