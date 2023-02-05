@@ -5,9 +5,9 @@ class Api {
   }
 
   _getHeaders() {
-    const jwt = localStorage.getItem('jwt');
+    const token = localStorage.getItem('token');
     return {
-      'Authorization': `Bearer ${jwt}`,
+      'Authorization': `Bearer ${token}`,
       ...this._headers,
     }
   }
@@ -78,20 +78,6 @@ class Api {
     return this._request(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: 'DELETE',
       headers: this._getHeaders(),
-    });
-  }
-
-  putLike(cardId) {
-    return this._request(`${this._baseUrl}/cards/${cardId}/likes`, {
-      method: 'PUT',
-      headers: this._headers,
-    });
-  }
-
-  deleteLike(cardId) {
-    return this._request(`${this._baseUrl}/cards/${cardId}/likes`, {
-      method: 'DELETE',
-      headers: this._headers,
     });
   }
 
