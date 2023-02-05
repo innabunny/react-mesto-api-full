@@ -1,4 +1,3 @@
-import { baseUrl } from "./constants.js";
 class Api {
   constructor({url, headers}) {
     this._baseUrl = url;
@@ -28,18 +27,21 @@ class Api {
   getUserData() {
     return this._request(`${this._baseUrl}/users/me`, {
       method: 'GET',
+      credentials: 'include',
       headers: this._getHeaders()});
   }
 
   getCards() {
     return this._request(`${this._baseUrl}/cards`, {
       method: 'GET',
+      credentials: 'include',
       headers: this._getHeaders()});
   }
 
   addCard(data) {
     return this._request(`${this._baseUrl}/cards`, {
       method: 'POST',
+      credentials: 'include',
       headers: this._getHeaders(),
       body: JSON.stringify({
         name: data.name,
@@ -108,6 +110,6 @@ export const api = new Api({
   url: 'http://api.igmesto.nomoredom.nomoredomainsclub.ru',
   headers: {
     // authorization: '2ca56f07-fcb4-4986-82c9-567bd5155cbe',
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
   }
 })
