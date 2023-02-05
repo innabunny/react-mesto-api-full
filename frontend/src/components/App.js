@@ -172,7 +172,7 @@ function App() {
       })
   }
   function tokenCheck() {
-    const token = localStorage.getItem('jwt');
+    const token = localStorage.getItem('token');
     if (token) {
       authApi.checkToken(token)
         .then((res) => {
@@ -193,7 +193,7 @@ function App() {
   }, [])
 
   function signOut() {
-    localStorage.removeItem('jwt');
+    localStorage.removeItem('token');
     localStorage.removeItem('email');
     setEmail('');
     history.push('/sign-in');
