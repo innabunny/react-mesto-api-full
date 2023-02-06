@@ -54,7 +54,7 @@ function App() {
         .then((res) => {
           if (res) {
             setLoggedIn(true);
-            setEmail(res.data.email);
+            setEmail(res.email);
             history.push('/');
           }
         })
@@ -136,18 +136,35 @@ function App() {
       })
   }
 
+  // function handleCardLike(card) {
+  //   const isLiked = card.likes.some((i) => i._id === currentUser._id);
+  //   api
+  //     .changeLikeCardStatus(card._id, isLiked)
+  //     .then((newCard) => {
+  //       setCards((state) =>
+  //         state.map((c) => (c._id === card._id ? newCard : c))
+  //       );
+  //     })
+  //     .catch((err) => {
+  //       console.log('Ошибка', err);
+  //     })
+  // }
+
   function handleCardLike(card) {
     const isLiked = card.likes.some((i) => i._id === currentUser._id);
-    api
-      .changeLikeCardStatus(card._id, isLiked)
-      .then((newCard) => {
-        setCards((state) =>
-          state.map((c) => (c._id === card._id ? newCard : c))
-        );
-      })
-      .catch((err) => {
-        console.log('Ошибка', err);
-      })
+    if (!isLiked) {
+      api.likeCard(card._id)
+        .then(newCard => {
+          setCards(state => state.map(c => c._id === card._id ? newCard : c))
+        })
+        .catch(err => console.log(err))
+    } else {
+      api.deleteLikeCard(card._id)
+        .then(newCard => {
+          setCards(state => state.map(c => c._id === card._id ? newCard : c))
+        })
+        .catch(err => console.log(err))
+    }
   }
 
   function handleCardDelete(card) {

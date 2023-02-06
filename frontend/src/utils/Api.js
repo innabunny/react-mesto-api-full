@@ -57,6 +57,7 @@ class Api {
   deleteCard(cardId) {
     return this._request(`${this._baseUrl}/cards/${cardId}`, {
       method: 'DELETE',
+      credentials: 'include',
       headers: this._headers,
     });
   }
@@ -68,6 +69,20 @@ class Api {
         headers: this._headers,
       });
     }
+    return this._request(`${this._baseUrl}/cards/${cardId}/likes`, {
+      method: 'DELETE',
+      headers: this._headers,
+    });
+  }
+
+  likeCard(cardId) {
+    return this._request(`${this._baseUrl}/cards/${cardId}/likes`, {
+      method: 'PUT',
+      headers: this._headers,
+    });
+  }
+
+  deleteLikeCard(cardId) {
     return this._request(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: 'DELETE',
       headers: this._headers,
@@ -91,6 +106,7 @@ export const api = new Api({
   headers: {
     // authorization: '2ca56f07-fcb4-4986-82c9-567bd5155cbe',
     'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
+    'Accept': 'application/json',
     'Content-Type': 'application/json',
   }
 })
