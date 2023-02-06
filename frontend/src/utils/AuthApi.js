@@ -16,7 +16,6 @@ class AuthApi {
       method: 'POST',
       credentials: 'include',
       headers: {
-        "Accept": "application/json",
         "Content-Type": "application/json"
       },
       body: JSON.stringify({ email, password })
@@ -30,7 +29,6 @@ class AuthApi {
       method: 'POST',
       credentials: 'include',
       headers: {
-         "Accept": "application/json",
         "Content-Type": "application/json"
       },
       body: JSON.stringify({ email, password })
@@ -43,7 +41,6 @@ class AuthApi {
       method: 'GET',
       credentials: 'include',
       headers: {
-         "Accept": "application/json",
         "Content-Type": "application/json",
          "Authorization": `Bearer ${token}`,
       }
