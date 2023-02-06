@@ -19,7 +19,7 @@ module.exports.createCard = (req, res, next) => {
   const { name, link } = req.body;
   cardSchema.create({ name, link, owner: req.user._id })
     .then((card) => {
-      res.send({ data: card });
+      res.send(card);
     })
     .catch((error) => {
       if (error.name === 'ValidationError') {
@@ -58,7 +58,7 @@ module.exports.likeCard = (req, res, next) => {
   )
     .then((card) => {
       if (card) {
-        res.status(SUCCESS).send({ data: card });
+        res.status(SUCCESS).send(card);
       } else {
         next(new NotFoundError('Карточка с указанным _id не найдена'));
       }
@@ -79,7 +79,7 @@ module.exports.dislikeCard = (req, res, next) => {
   )
     .then((card) => {
       if (card) {
-        res.status(SUCCESS).send({ data: card });
+        res.status(SUCCESS).send(card);
       } else {
         next(new NotFoundError('Карточка с указанным _id не найдена'));
       }
