@@ -10,7 +10,7 @@ module.exports.getCards = (req, res, next) => {
   cardSchema.find({})
     .populate(['owner', 'likes'])
     .then((cards) => {
-      res.send({ data: cards });
+      res.send(cards);
     })
     .catch(next);
 };
