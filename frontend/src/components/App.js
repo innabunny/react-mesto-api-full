@@ -34,6 +34,37 @@ function App() {
   const [email, setEmail] = useState('');
   const [requestStatus, setRequestStatus] = useState(false);
 
+  useEffect(() => {
+    if(loggedIn) {
+      Promise.all([api.getUserData(), api.getCards()])
+        .then(([userData, cards]) => {
+          setCurrentUser(userData);
+          setCards(cards);
+        })
+        .catch((err) => {
+          console.log('Ошибка', err);
+        })
+    }
+  },[loggedIn])
+
+  useEffect(() => {
+    const token = localStorage.getItem('jwt');
+    if (token) {
+      authApi.checkToken(token)
+        .then((res) => {
+          if (res) {
+            setLoggedIn(true);
+            setEmail(res.data.email);
+            history.push('/');
+          }
+        })
+        .catch((err) => {
+          console.log('Ошибка', err);
+        })
+    }
+  }, [history]);
+
+
   const closeAllPopups = () => {
     setEditProfilePopupOpen(false);
     setAddPlacePopupOpen(false);
@@ -79,7 +110,6 @@ function App() {
         console.log('Ошибка', err);
       })
   }
-
   function handleUpdateUserAvatar(data) {
     setIsLoading(true);
     api
@@ -131,19 +161,6 @@ function App() {
         console.log('Ошибка', err);
       })
   }
-
-  useEffect(() => {
-    if(loggedIn) {
-      Promise.all([api.getUserData(), api.getCards()])
-        .then(([userData, cards]) => {
-          setCurrentUser(userData);
-          setCards(cards);
-        })
-        .catch((err) => {
-          console.log('Ошибка', err);
-        })
-    }
-  },[loggedIn])
   function handleRegister(data) {
     authApi.registerUser(data.email, data.password)
       .then(() => {
@@ -171,26 +188,7 @@ function App() {
         console.log('Ошибка', err);
       })
   }
-  function tokenCheck() {
-    const token = localStorage.getItem('jwt');
-    if (token) {
-      authApi.checkToken(token)
-        .then((res) => {
-          if(res) {
-            setLoggedIn(true);
-            setEmail(res.data.email);
-            history.push('/');
-          }
-        })
-        .catch((err) => {
-          console.log('Ошибка', err);
-        })
-    }
-  }
 
-  useEffect(() => {
-    tokenCheck();
-  }, [])
 
   function signOut() {
     localStorage.removeItem('token');
@@ -217,7 +215,7 @@ function App() {
            <Register onRegister={handleRegister} />
          </Route>
          <Route path="/sign-in">
-           <Login onLogin={handleAuthorization} tokenCheck={tokenCheck}/>
+           <Login onLogin={handleAuthorization}/>
          </Route>
        </Switch>
         <Footer />
