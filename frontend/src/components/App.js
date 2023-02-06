@@ -136,15 +136,8 @@ function App() {
     if(loggedIn) {
       Promise.all([api.getUserData(), api.getCards()])
         .then(([userData, cards]) => {
-          const user = userData.user;
-          setCurrentUser({
-            ...currentUser,
-            name: user.name,
-            about: user.about,
-            avatar: user.avatar,
-            id: user._id,
-          });
-          setCards(cards.map(i => i).reverse());
+          setCurrentUser(userData);
+          setCards(cards);
         })
         .catch((err) => {
           console.log('Ошибка', err);
@@ -179,7 +172,7 @@ function App() {
       })
   }
   function tokenCheck() {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('jwt');
     if (token) {
       authApi.checkToken(token)
         .then((res) => {
