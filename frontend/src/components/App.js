@@ -208,7 +208,7 @@ function App() {
 
 
   function signOut() {
-    localStorage.removeItem('token');
+    localStorage.removeItem('jwt');
     localStorage.removeItem('email');
     setEmail('');
     history.push('/sign-in');
