@@ -14,7 +14,6 @@ const cardSchema = new mongoose.Schema({
     validate: {
       validator(v) {
         return validator.isURL(v, { protocols: ['http', 'https'], require_tld: true, require_protocol: true });
-        // return /^https?:\/\/(wwww.)?[-._~:/?#@!$&'()*+,;=a-zA-Z0-9]+$/.test(v);
       },
       message: 'Неккоректный адрес',
     },
@@ -31,7 +30,7 @@ const cardSchema = new mongoose.Schema({
   }],
   createdAt: {
     type: Date,
-    default: Date.now(),
+    default: Date.now,
   },
 });
 

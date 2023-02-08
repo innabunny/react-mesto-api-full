@@ -108,7 +108,7 @@ module.exports.login = (req, res, next) => {
   userSchema.findOne({ email }).select('+password')
     .then((user) => {
       if (!user) {
-        next(new UnauthorizedError('Неправильные почта или пароль'));
+        throw new UnauthorizedError('Неправильные почта или пароль');
       }
       return bcrypt.compare(password, user.password)
         .then((matched) => {
@@ -130,7 +130,7 @@ module.exports.getUserProfile = (req, res, next) => {
   userSchema.findById(req.user._id)
     .then((user) => {
       if (!user) {
-        next(new NotFoundError('Пользователь не найден'));
+        throw new NotFoundError('Пользователь не найден');
       }
       res.send(user);
     })
