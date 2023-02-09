@@ -167,13 +167,13 @@ function getData () {
     if (!isLiked) {
       api.likeCard(card._id)
         .then(newCard => {
-          setCards(state => state.map(c => c._id === card._id ? newCard : c))
+          setCards(state => state.map((c) => c._id === card._id ? newCard : c))
         })
         .catch(err => console.log(err))
     } else {
       api.deleteLikeCard(card._id)
         .then(newCard => {
-          setCards(state => state.map(c => c._id === card._id ? newCard : c))
+          setCards(state => state.map((c) => c._id === card._id ? newCard : c))
         })
         .catch(err => console.log(err))
     }
@@ -183,7 +183,7 @@ function getData () {
     api
       .deleteCard(card._id)
       .then(() => {
-        setCards((items) => items.filter((c) => c._id !== card._id && c));
+        setCards((items) => items.filter((c) => c._id !== card._id));
         closeAllPopups();
       })
       .catch((err) => {
