@@ -58,7 +58,6 @@ function getData () {
     })
 }
 
-
   useEffect(() => {
     const token = localStorage.getItem('jwt');
     if (token) {

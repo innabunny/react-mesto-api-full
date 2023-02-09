@@ -6,10 +6,13 @@ function Card({card, onCardClick, onCardLike, onCardRemove}) {
   const isOwner = card.owner._id === currentUser._id;
   const isLiked = card.likes.some((i) => i._id === currentUser._id);
   const cardLikeButtonClassName = `element__button-like ${isLiked ? "element__button-like_active" : ""}`;
-  const buttonDelete = `${isOwner ? "element__button-delete" : ""}`;
 
   const handleLikeCard = () => {
     onCardLike(card);
+  }
+
+  const handleDeleteCard = () => {
+    onCardRemove(card);
   }
 
   return(
@@ -23,11 +26,10 @@ function Card({card, onCardClick, onCardLike, onCardRemove}) {
               <div className="element__like-count">{card.likes.length}</div>
             </div>
           </div>
-          <button
+        {isOwner && (<button
             type="button"
-            className={buttonDelete}
-            // hidden={`${isOwner ? '' : 'hidden'}`}
-          onClick={() => onCardRemove(card)}></button>
+            className="element__button-delete"
+          onClick={handleDeleteCard}></button>)}
       </article>
   )
 }
