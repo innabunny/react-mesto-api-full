@@ -1,24 +1,11 @@
 import React from "react";
-// import {useContext} from "react";
 import { CurrentUserContext } from "../contexts/CurrentUserContext.js";
 
 function Card({ card, onCardClick, onCardLike, onCardRemove }) {
   const currentUser = React.useContext(CurrentUserContext);
-  console.log(card.owner._id);
-  console.log(card.owner);
-  console.log(currentUser.id);
-  console.log(currentUser);
   const isOwner = card.owner === currentUser._id;
   const isLiked = card.likes.some((i) => i === currentUser._id);
   const cardLikeButtonClassName = `element__button-like ${isLiked ? "element__button-like_active" : ""}`;
-
-  // const handleLikeCard = () => {
-  //   onCardLike(card);
-  // }
-
-  const handleDeleteCard = () => {
-    onCardRemove(card);
-  }
 
   return(
       <article className="element">
@@ -34,7 +21,7 @@ function Card({ card, onCardClick, onCardLike, onCardRemove }) {
         {isOwner && (<button
             type="button"
             className="element__button-delete"
-          onClick={handleDeleteCard}></button>)}
+          onClick={() => onCardRemove(card)}></button>)}
       </article>
   )
 }
