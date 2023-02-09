@@ -34,18 +34,30 @@ function App() {
   const [email, setEmail] = useState('');
   const [requestStatus, setRequestStatus] = useState(false);
 
-  useEffect(() => {
-    if(loggedIn) {
-      Promise.all([api.getUserData(), api.getCards()])
-        .then(([userData, cards]) => {
-          setCurrentUser(userData);
-          setCards(cards);
-        })
-        .catch((err) => {
-          console.log('Ошибка', err);
-        })
-    }
-  },[loggedIn])
+  // useEffect(() => {
+  //   if(loggedIn) {
+  //     Promise.all([api.getUserData(), api.getCards()])
+  //       .then(([userData, cards]) => {
+  //         setCurrentUser(userData);
+  //         setCards(cards);
+  //       })
+  //       .catch((err) => {
+  //         console.log('Ошибка', err);
+  //       })
+  //   }
+  // },[loggedIn])
+
+function getData () {
+  Promise.all([api.getUserData(), api.getCards()])
+    .then(([userData, cards]) => {
+      setCurrentUser(userData);
+      setCards(cards);
+    })
+    .catch((err) => {
+      console.log('Ошибка', err);
+    })
+}
+
 
   useEffect(() => {
     const token = localStorage.getItem('jwt');
@@ -55,6 +67,7 @@ function App() {
           if (res) {
             setLoggedIn(true);
             setEmail(res.email);
+            getData();
             history.push('/');
           }
         })
@@ -199,13 +212,13 @@ function App() {
         localStorage.setItem('email', data.email);
         setEmail(data.email);
         setLoggedIn(true);
+        getData();
         history.push('/');
       })
       .catch((err) =>{
         console.log('Ошибка', err);
       })
   }
-
 
   function signOut() {
     localStorage.removeItem('jwt');
