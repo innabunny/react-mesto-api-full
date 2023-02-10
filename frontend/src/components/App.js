@@ -151,7 +151,6 @@ function App() {
   function handleAuthorization(data) {
     authApi.loginUser(data.email, data.password)
       .then(({ token }) => {
-        console.log(token);
           localStorage.setItem('jwt', token);
           // localStorage.setItem('email', data.email);
           setEmail(data.email);
@@ -178,7 +177,6 @@ function App() {
           if (res) {
             setEmail(res.email);
             setLoggedIn(true);
-            getData();
             history.push('/');
           }
         })
@@ -188,30 +186,30 @@ function App() {
     }
   }, [loggedIn, history]);
 
-  function getData() {
-    Promise.all([api.getUserData(), api.getCards()])
-      .then(([userData, cards]) => {
-        setCurrentUser(userData);
-        setCards(cards);
-      })
-      .catch((err) => {
-        console.log('Ошибка', err);
-      })
-  }
+  // function getData() {
+  //   Promise.all([api.getUserData(), api.getCards()])
+  //     .then(([userData, cards]) => {
+  //       setCurrentUser(userData);
+  //       setCards(cards);
+  //     })
+  //     .catch((err) => {
+  //       console.log('Ошибка', err);
+  //     })
+  // }
   //
-  // useEffect(() => {
-  //   const token = localStorage.getItem("jwt");
-  //   if(token) {
-  //     Promise.all([api.getUserData(), api.getCards()])
-  //       .then(([userData, cards]) => {
-  //         setCurrentUser(userData);
-  //         setCards(cards);
-  //       })
-  //       .catch((err) => {
-  //         console.log('Ошибка', err);
-  //       })
-  //   }
-  // },[loggedIn])
+  useEffect(() => {
+    const token = localStorage.getItem("jwt");
+    if(token) {
+      Promise.all([api.getUserData(), api.getCards()])
+        .then(([userData, cards]) => {
+          setCurrentUser(userData);
+          setCards(cards);
+        })
+        .catch((err) => {
+          console.log('Ошибка', err);
+        })
+    }
+  },[loggedIn])
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
