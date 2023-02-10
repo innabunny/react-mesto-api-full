@@ -92,7 +92,7 @@ export const api = new Api({
   url: 'https://api.igmesto.nomoredom.nomoredomainsclub.ru',
   headers: {
     // authorization: '2ca56f07-fcb4-4986-82c9-567bd5155cbe',
-     'Authorization' : `Bearer ${localStorage.getItem('jwt')}`,
+     'Authorization' : `Bearer ${localStorage.getItem('token')}`,
     'Accept': 'application/json',
     'Content-Type': 'application/json',
   }

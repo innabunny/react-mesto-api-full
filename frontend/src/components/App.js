@@ -170,7 +170,7 @@ function App() {
   }
 
   useEffect(() => {
-    const token = localStorage.getItem('jwt');
+    const token = localStorage.getItem('token');
     if (token) {
       authApi.checkToken(token)
         .then((res) => {
@@ -198,7 +198,7 @@ function App() {
   // }
   //
   useEffect(() => {
-    const token = localStorage.getItem("jwt");
+    const token = localStorage.getItem("token");
     if(token) {
       Promise.all([api.getUserData(), api.getCards()])
         .then(([userData, cards]) => {
