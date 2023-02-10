@@ -34,39 +34,30 @@ function App() {
   const [email, setEmail] = useState('');
   const [requestStatus, setRequestStatus] = useState(false);
 
-  // useEffect(() => {
-  //   if(loggedIn) {
-  //     Promise.all([api.getUserData(), api.getCards()])
-  //       .then(([userData, cards]) => {
-  //         setCurrentUser(userData);
-  //         setCards(cards);
-  //       })
-  //       .catch((err) => {
-  //         console.log('Ошибка', err);
-  //       })
-  //   }
-  // },[loggedIn])
-
-function getData () {
-  Promise.all([api.getUserData(), api.getCards()])
-    .then(([userData, cards]) => {
-      setCurrentUser(userData);
-      setCards(cards);
-    })
-    .catch((err) => {
-      console.log('Ошибка', err);
-    })
-}
+  useEffect(() => {
+    if(loggedIn) {
+      Promise.all([api.getUserData(), api.getCards()])
+        .then(([userData, cards]) => {
+          setCurrentUser(userData);
+          setCards(cards);
+        })
+        .catch((err) => {
+          console.log('Ошибка', err);
+        })
+    }
+  },[loggedIn])
 
   useEffect(() => {
     const token = localStorage.getItem('jwt');
+    console.log(token);
     if (token) {
       authApi.checkToken(token)
         .then((res) => {
           if (res) {
-            setLoggedIn(true);
+            setCurrentUser(res);
             setEmail(res.email);
-            getData();
+            console.log(currentUser);
+            setLoggedIn(true);
             history.push('/');
           }
         })
@@ -74,8 +65,18 @@ function getData () {
           console.log('Ошибка', err);
         })
     }
-  }, [history]);
+  }, [history, currentUser]);
 
+// function getData () {
+//   Promise.all([api.getUserData(), api.getCards()])
+//     .then(([userData, cards]) => {
+//       setCurrentUser(userData);
+//       setCards(cards);
+//     })
+//     .catch((err) => {
+//       console.log('Ошибка', err);
+//     })
+// }
 
   const closeAllPopups = () => {
     setEditProfilePopupOpen(false);
@@ -193,12 +194,11 @@ function getData () {
   function handleAuthorization(data) {
     authApi.loginUser(data.email, data.password)
       .then((res) => {
-        localStorage.setItem('jwt', res.token);
-        localStorage.setItem('email', data.email);
-        setEmail(data.email);
-        setLoggedIn(true);
-        getData();
-        history.push('/');
+          localStorage.setItem('jwt', res.token);
+          localStorage.setItem('email', data.email);
+          setEmail(data.email);
+          setLoggedIn(true);
+          history.push('/');
       })
       .catch((err) =>{
         console.log('Ошибка', err);
