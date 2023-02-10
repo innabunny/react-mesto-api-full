@@ -14,7 +14,7 @@ const ConflictError = require('../errors/ConflictError');
 module.exports.getUsers = (req, res, next) => {
   userSchema
     .find({})
-    .then((users) => res.status(SUCCESS).send({ data: users }))
+    .then((users) => res.status(SUCCESS).send(users))
     .catch((error) => {
       next(error);
     });
