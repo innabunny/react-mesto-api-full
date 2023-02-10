@@ -150,8 +150,8 @@ function App() {
   }
   function handleAuthorization(data) {
     authApi.loginUser(data.email, data.password)
-      .then((res) => {
-          localStorage.setItem('jwt', res.token);
+      .then(({ token }) => {
+          localStorage.setItem('jwt', token);
           // localStorage.setItem('email', data.email);
           setEmail(data.email);
           setLoggedIn(true);
@@ -170,7 +170,7 @@ function App() {
   }
 
   useEffect(() => {
-    const token = localStorage.getItem("jwt");
+    const token = localStorage.getItem('jwt');
     if (token) {
       authApi.checkToken(token)
         .then((res) => {
