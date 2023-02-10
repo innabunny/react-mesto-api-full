@@ -151,7 +151,7 @@ function App() {
   function handleAuthorization(data) {
     authApi.loginUser(data.email, data.password)
       .then(({ token }) => {
-          localStorage.setItem('jwt', token);
+          localStorage.setItem('token', token);
           // localStorage.setItem('email', data.email);
           setEmail(data.email);
           setLoggedIn(true);
@@ -163,7 +163,7 @@ function App() {
   }
 
   function signOut() {
-    localStorage.removeItem('jwt');
+    localStorage.removeItem('token');
     localStorage.removeItem('email');
     setEmail('');
     history.push('/sign-in');
@@ -199,6 +199,7 @@ function App() {
   //
   useEffect(() => {
     const token = localStorage.getItem("token");
+    console.log(token);
     if(token) {
       Promise.all([api.getUserData(), api.getCards()])
         .then(([userData, cards]) => {
