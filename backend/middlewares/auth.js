@@ -19,5 +19,5 @@ module.exports = (req, res, next) => {
     throw new UnauthorizedError('Проблема с токеном');
   }
   req.user = payload;
-  next();
+  return next();
 };

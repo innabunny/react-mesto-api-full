@@ -1,8 +1,6 @@
 const allowedCors = [
   'http://localhost:3000',
   'https://localhost:3000',
-  'http://localhost:3001',
-  'https://localhost:3001',
   'http://igmesto.nomoredomainsclub.ru',
   'https://igmesto.nomoredomainsclub.ru',
   'http://api.igmesto.nomoredom.nomoredomainsclub.ru',
@@ -23,7 +21,7 @@ module.exports = (req, res, next) => {
   if (method === 'OPTIONS') {
     res.header('Access-Control-Allow-Methods', DEFAULT_ALLOWED_METHODS);
     res.header('Access-Control-Allow-Headers', requestHeaders);
-    return res.end();
+    res.end();
   }
-  return next();
+  next();
 };
