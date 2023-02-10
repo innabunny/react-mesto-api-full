@@ -49,14 +49,12 @@ function App() {
 
   useEffect(() => {
     const token = localStorage.getItem('jwt');
-    console.log(token);
     if (token) {
       authApi.checkToken(token)
         .then((res) => {
           if (res) {
             setCurrentUser(res);
             setEmail(res.email);
-            console.log(currentUser);
             setLoggedIn(true);
             history.push('/');
           }
@@ -66,17 +64,6 @@ function App() {
         })
     }
   }, [history, currentUser]);
-
-// function getData () {
-//   Promise.all([api.getUserData(), api.getCards()])
-//     .then(([userData, cards]) => {
-//       setCurrentUser(userData);
-//       setCards(cards);
-//     })
-//     .catch((err) => {
-//       console.log('Ошибка', err);
-//     })
-// }
 
   const closeAllPopups = () => {
     setEditProfilePopupOpen(false);
@@ -150,7 +137,7 @@ function App() {
   }
 
   function handleCardLike(card) {
-    const isLiked = card.likes.some((i) => i._id === currentUser._id);
+    const isLiked = card.likes.some((i) => i === currentUser._id);
     if (!isLiked) {
       api.likeCard(card._id)
         .then(newCard => {
