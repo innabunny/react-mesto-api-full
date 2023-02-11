@@ -150,9 +150,9 @@ function App() {
   }
   function handleAuthorization(data) {
     authApi.loginUser(data.email, data.password)
-      .then((data) => {
+      .then(({ token }) => {
         console.log(data);
-        localStorage.setItem('token', data.token);
+        localStorage.setItem('jwt', token);
         // localStorage.setItem('email', data.email);
         setEmail(data.email);
         setLoggedIn(true);
