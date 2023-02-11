@@ -120,7 +120,7 @@ module.exports.login = (req, res, next) => {
             process.env.JWT_SECRET,
             { expiresIn: '7d' },
           );
-          res.send({ token });
+          res.send(token);
         });
     })
     .catch(next);

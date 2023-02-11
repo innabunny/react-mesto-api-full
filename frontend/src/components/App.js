@@ -150,8 +150,8 @@ function App() {
   }
   function handleAuthorization(data) {
     authApi.loginUser(data.email, data.password)
-      .then(({ token }) => {
-          localStorage.setItem('token', token);
+      .then((res) => {
+          localStorage.setItem('jwt', res.token);
           // localStorage.setItem('email', data.email);
           setEmail(data.email);
           setLoggedIn(true);
@@ -163,14 +163,14 @@ function App() {
   }
 
   function signOut() {
-    localStorage.removeItem('token');
+    localStorage.removeItem('jwt');
     localStorage.removeItem('email');
     setEmail('');
     history.push('/sign-in');
   }
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('jwt');
     if (token) {
       authApi.checkToken(token)
         .then((res) => {
@@ -198,7 +198,7 @@ function App() {
   // }
   //
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("jwt");
     console.log(token);
     if(token) {
       Promise.all([api.getUserData(), api.getCards()])
