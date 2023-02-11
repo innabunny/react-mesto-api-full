@@ -37,12 +37,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(requestLogger);
 app.use(cors({
   origin: [
-    'http://localhost:3000',
-    'https://localhost:3000',
     'http://igmesto.nomoredomainsclub.ru',
     'https://igmesto.nomoredomainsclub.ru',
-    'http://api.igmesto.nomoredom.nomoredomainsclub.ru',
-    'https://api.igmesto.nomoredom.nomoredomainsclub.ru',
   ],
   methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
 }));

@@ -3,7 +3,7 @@ class Api {
     this._baseUrl = url;
     this._headers = headers;
     const jwt = localStorage.getItem('jwt')
-    if(jwt) {
+    if (jwt) {
       this._headers.authorization = "Bearer " + jwt;
     }
   }
