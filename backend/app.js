@@ -41,7 +41,6 @@ app.use(cors({
     'https://igmesto.nomoredomainsclub.ru',
   ],
   methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
-  credentials: true,
 }));
 
 app.get('/crash-test', () => {

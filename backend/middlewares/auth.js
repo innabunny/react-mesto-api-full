@@ -13,7 +13,8 @@ module.exports = (req, res, next) => {
       throw new UnauthorizedError('Необходима авторизация');
     }
     const token = authorization.replace('Bearer ', '');
-    req.user = jwt.verify(token, NODE_ENV === 'production' ? JWT_SECRET : 'dev-key');
+    const payload = jwt.verify(token, NODE_ENV === 'production' ? JWT_SECRET : 'dev-key');
+    req.user = payload;
   } catch (err) {
     throw new UnauthorizedError('Проблема с токеном');
   }

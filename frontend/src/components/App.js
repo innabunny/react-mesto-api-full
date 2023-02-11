@@ -191,6 +191,23 @@ function App() {
     }
   },[loggedIn])
 
+  //delete
+  useEffect(() => {
+    const jwt = localStorage.getItem('jwt');
+    if (jwt) {
+      authApi.checkToken(jwt)
+        .then((res) => {
+          setLoggedIn(true);
+          setEmail(res.email);
+          history.push('/');
+        })
+        .catch((err) => {
+          console.log('Ошибка', err);
+        })
+    }
+  }, [history]);
+
+
   function signOut() {
     localStorage.removeItem('jwt');
     localStorage.removeItem('email');
