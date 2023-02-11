@@ -16,6 +16,11 @@ class Api {
     return fetch(url, options).then((res) => this._checkResponse(res));
   }
 
+  setToken(token) {
+    localStorage.setItem("jwt", token);
+    this._headers.authorization = "Bearer " + token;
+  }
+
   getUserData() {
     return this._request(`${this._baseUrl}/users/me`, {
       method: 'GET',

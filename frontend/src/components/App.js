@@ -152,8 +152,8 @@ function App() {
     authApi.loginUser(data.email, data.password)
       .then(({ token }) => {
         console.log(data);
-        localStorage.setItem('jwt', token);
-        // localStorage.setItem('email', data.email);
+        api.setToken(token)
+        // localStorage.setItem('jwt', token);
         setEmail(data.email);
         setLoggedIn(true);
         history.push('/');
@@ -170,7 +170,7 @@ function App() {
     history.push('/sign-in');
   }
 
-  useEffect(() => {
+  function handleToken() {
     const token = localStorage.getItem('jwt');
     if (token) {
       authApi.checkToken(token)
@@ -185,13 +185,11 @@ function App() {
           console.log('Ошибка', err);
         })
     }
-  }, [loggedIn, history]);
+  }
 
   useEffect(() => {
-    const token = localStorage.getItem('jwt');
-    console.log(token);
     if(loggedIn) {
-      Promise.all([api.getUserData(token), api.getCards(token)])
+      Promise.all([api.getUserData(), api.getCards()])
         .then(([userData, cards]) => {
           setCurrentUser(userData);
           setCards(cards);
@@ -199,6 +197,7 @@ function App() {
         .catch((err) => {
           console.log('Ошибка', err);
         })
+      handleToken();
     }
   },[loggedIn])
 
