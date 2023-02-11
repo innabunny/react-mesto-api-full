@@ -150,12 +150,13 @@ function App() {
   }
   function handleAuthorization(data) {
     authApi.loginUser(data.email, data.password)
-      .then(({ token }) => {
-          localStorage.setItem('jwt', token);
-          // localStorage.setItem('email', data.email);
-          setEmail(data.email);
-          setLoggedIn(true);
-          history.push('/');
+      .then((data) => {
+        console.log(data);
+        localStorage.setItem('token', data.token);
+        // localStorage.setItem('email', data.email);
+        setEmail(data.email);
+        setLoggedIn(true);
+        history.push('/');
       })
       .catch((err) =>{
         console.log('Ошибка', err);
