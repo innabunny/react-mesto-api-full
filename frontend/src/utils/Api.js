@@ -2,6 +2,10 @@ class Api {
   constructor({url, headers}) {
     this._baseUrl = url;
     this._headers = headers;
+    const jwt = localStorage.getItem('jwt')
+    if(jwt) {
+      this._headers.authorization = "Bearer " + jwt;
+    }
   }
 
   _checkResponse(res) {
@@ -38,7 +42,6 @@ class Api {
   addCard(data) {
     return this._request(`${this._baseUrl}/cards`, {
       method: 'POST',
-      credentials: 'include',
       headers: this._headers,
       body: JSON.stringify({
         name: data.name,
@@ -50,7 +53,6 @@ class Api {
   editUserInfo(data) {
     return this._request(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
-      credentials: 'include',
       headers: this._headers,
       body: JSON.stringify({
         name: data.name,
@@ -62,7 +64,6 @@ class Api {
   deleteCard(cardId) {
     return this._request(`${this._baseUrl}/cards/${cardId}`, {
       method: 'DELETE',
-      credentials: 'include',
       headers: this._headers,
     });
   }
@@ -84,7 +85,6 @@ class Api {
   changeAvatar(data) {
     return this._request(`${this._baseUrl}/users/me/avatar`, {
       method: 'PATCH',
-      credentials: 'include',
       headers: this._headers,
       body: JSON.stringify({
         avatar: data.avatar,
@@ -97,7 +97,7 @@ export const api = new Api({
   url: 'https://api.igmesto.nomoredom.nomoredomainsclub.ru',
   headers: {
     // authorization: '2ca56f07-fcb4-4986-82c9-567bd5155cbe',
-     'Authorization' : `Bearer ${localStorage.getItem('jwt')}`,
+    //  'Authorization' : `Bearer ${localStorage.getItem('jwt')}`,
     'Content-Type': 'application/json',
   }
 })

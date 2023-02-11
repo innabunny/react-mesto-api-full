@@ -14,7 +14,6 @@ class AuthApi {
   loginUser(email, password) {
     return fetch(`${this._baseUrl}/signin`, {
       method: 'POST',
-      credentials: 'include',
       headers: {
         "Content-Type": "application/json"
       },
@@ -27,7 +26,6 @@ class AuthApi {
   registerUser(email, password) {
     return fetch(`${this._baseUrl}/signup`, {
       method: 'POST',
-      credentials: 'include',
       headers: {
         "Content-Type": "application/json"
       },
