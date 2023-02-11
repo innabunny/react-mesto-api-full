@@ -167,6 +167,7 @@ function App() {
     localStorage.removeItem('email');
     setEmail('');
     history.push('/sign-in');
+    setLoggedIn(false);
   }
 
   function handleToken() {

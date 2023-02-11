@@ -28,14 +28,12 @@ class Api {
   getUserData() {
     return this._request(`${this._baseUrl}/users/me`, {
       method: 'GET',
-      credentials: 'include',
       headers: this._headers});
   }
 
   getCards() {
     return this._request(`${this._baseUrl}/cards`, {
       method: 'GET',
-      credentials: 'include',
       headers: this._headers});
   }
 
