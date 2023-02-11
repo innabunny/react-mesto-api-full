@@ -31,7 +31,6 @@ mongoose.connect('mongodb://127.0.0.1:27017/mestodb', {
 
 app.use(limiter);
 app.use(helmet());
-// app.use('*', cors);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(requestLogger);
@@ -41,12 +40,11 @@ app.use(cors({
     'https://localhost:3000',
     'http://igmesto.nomoredomainsclub.ru',
     'https://igmesto.nomoredomainsclub.ru',
-    'http://api.igmesto.nomoredom.nomoredomainsclub.ru',
-    'https://api.igmesto.nomoredom.nomoredomainsclub.ru',
   ],
   methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
+  credentials: true,
 }));
-
+// app.use(cors);
 app.get('/crash-test', () => {
   setTimeout(() => {
     throw new Error('Сервер сейчас упадёт');

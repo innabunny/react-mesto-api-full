@@ -28,21 +28,18 @@ class Api {
   getUserData() {
     return this._request(`${this._baseUrl}/users/me`, {
       method: 'GET',
-      credentials: 'include',
       headers: this._headers});
   }
 
   getCards() {
     return this._request(`${this._baseUrl}/cards`, {
       method: 'GET',
-      credentials: 'include',
       headers: this._headers});
   }
 
   addCard(data) {
     return this._request(`${this._baseUrl}/cards`, {
       method: 'POST',
-      credentials: 'include',
       headers: this._headers,
       body: JSON.stringify({
         name: data.name,
@@ -54,7 +51,6 @@ class Api {
   editUserInfo(data) {
     return this._request(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
-      credentials: 'include',
       headers: this._headers,
       body: JSON.stringify({
         name: data.name,
@@ -66,7 +62,6 @@ class Api {
   deleteCard(cardId) {
     return this._request(`${this._baseUrl}/cards/${cardId}`, {
       method: 'DELETE',
-      credentials: 'include',
       headers: this._headers,
     });
   }
@@ -74,7 +69,6 @@ class Api {
   likeCard(cardId) {
     return this._request(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: 'PUT',
-      credentials: 'include',
       headers: this._headers,
     });
   }
@@ -82,7 +76,6 @@ class Api {
   deleteLikeCard(cardId) {
     return this._request(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: 'DELETE',
-      credentials: 'include',
       headers: this._headers,
     });
   }
@@ -90,7 +83,6 @@ class Api {
   changeAvatar(data) {
     return this._request(`${this._baseUrl}/users/me/avatar`, {
       method: 'PATCH',
-      credentials: 'include',
       headers: this._headers,
       body: JSON.stringify({
         avatar: data.avatar,
