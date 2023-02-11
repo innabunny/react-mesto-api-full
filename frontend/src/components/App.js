@@ -10,7 +10,7 @@ import {useEffect, useState} from "react";
 import { CurrentUserContext } from "../contexts/CurrentUserContext.js";
 import { api } from "../utils/Api.js";
 import authApi from "../utils/AuthApi.js";
-import {Route, Switch, useHistory} from "react-router-dom";
+import {Redirect, Route, Switch, useHistory} from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute.js";
 import Register from "../components/Register.js";
 import Login from "../components/Login.js";
@@ -220,6 +220,9 @@ function App() {
          </Route>
          <Route path="/sign-in">
            <Login onLogin={handleAuthorization}/>
+         </Route>
+         <Route exact path="/">
+           {loggedIn ? <Redirect to="/"/> : <Redirect to="/sign-in"/> }
          </Route>
        </Switch>
         <Footer />
