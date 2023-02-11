@@ -39,7 +39,7 @@ class AuthApi {
   checkToken(jwt) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: 'GET',
-      credentials: 'include',
+      // credentials: 'include',
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${jwt}`,
