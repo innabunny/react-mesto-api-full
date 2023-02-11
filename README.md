@@ -3,7 +3,7 @@
  
 ### 
 * IP адрес 130.193.36.42
-* Ссылка на frontend - https://igmesto.nomoredomainsclub.ru/
+* Ссылка на frontend - https://igmesto.nomoredomainsclub.ru
 * Cсылка на backend - https://api.igmesto.nomoredom.nomoredomainsclub.ru
 
 

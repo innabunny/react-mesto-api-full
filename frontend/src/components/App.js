@@ -68,35 +68,6 @@ function App() {
     setConfirmPopupOpen(true);
   }
 
-  useEffect(() => {
-    if(loggedIn) {
-      Promise.all([api.getUserData(), api.getCards()])
-        .then(([userData, cards]) => {
-          setCurrentUser(userData);
-          setCards(cards);
-        })
-        .catch((err) => {
-          console.log('Ошибка', err);
-        })
-      handleToken();
-    }
-  },[loggedIn])
-
-  function handleToken() {
-    const jwt = localStorage.getItem('jwt');
-    if (jwt) {
-      authApi.checkToken(jwt)
-        .then((res) => {
-            setLoggedIn(true);
-            setEmail(res.email);
-            history.push('/');
-        })
-        .catch((err) => {
-          console.log('Ошибка', err);
-        })
-    }
-  }
-
   function handleUpdateUserInfo(data) {
     setIsLoading(true);
     api
@@ -190,6 +161,35 @@ function App() {
         console.log('Ошибка', err);
       })
   }
+
+  function handleToken() {
+    const jwt = localStorage.getItem('jwt');
+    if (jwt) {
+      authApi.checkToken(jwt)
+        .then((res) => {
+          setLoggedIn(true);
+          setEmail(res.email);
+          history.push('/');
+        })
+        .catch((err) => {
+          console.log('Ошибка', err);
+        })
+    }
+  }
+
+  useEffect(() => {
+    if(loggedIn) {
+      Promise.all([api.getUserData(), api.getCards()])
+        .then(([userData, cards]) => {
+          setCurrentUser(userData);
+          setCards(cards);
+        })
+        .catch((err) => {
+          console.log('Ошибка', err);
+        })
+      handleToken();
+    }
+  },[loggedIn])
 
   function signOut() {
     localStorage.removeItem('jwt');
