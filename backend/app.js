@@ -1,11 +1,12 @@
 require('dotenv').config();
 const express = require('express');
+const cors = require('cors');
 const mongoose = require('mongoose');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 const { errors } = require('celebrate');
 const bodyParser = require('body-parser');
-const cors = require('./middlewares/cors');
+// const cors = require('./middlewares/cors');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const { login, createUser } = require('./controllers/users');
 const { validationCreateUser, validationLogin } = require('./middlewares/validation');
@@ -30,10 +31,21 @@ mongoose.connect('mongodb://127.0.0.1:27017/mestodb', {
 
 app.use(limiter);
 app.use(helmet());
-app.use('*', cors);
+// app.use('*', cors);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(requestLogger);
+app.use(cors({
+  origin: [
+    'http://localhost:3000',
+    'https://localhost:3000',
+    'http://igmesto.nomoredomainsclub.ru',
+    'https://igmesto.nomoredomainsclub.ru',
+    'http://api.igmesto.nomoredom.nomoredomainsclub.ru',
+    'https://api.igmesto.nomoredom.nomoredomainsclub.ru',
+  ],
+  methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
+}));
 
 app.get('/crash-test', () => {
   setTimeout(() => {
