@@ -10,7 +10,7 @@ import {useEffect, useState} from "react";
 import { CurrentUserContext } from "../contexts/CurrentUserContext.js";
 import { api } from "../utils/Api.js";
 import authApi from "../utils/AuthApi.js";
-import {Redirect, Route, Switch, useHistory} from "react-router-dom";
+import { Route, Switch, useHistory } from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute.js";
 import Register from "../components/Register.js";
 import Login from "../components/Login.js";
@@ -66,6 +66,35 @@ function App() {
   const handleConfirmPopup = (card) => {
     setCardRemove(card);
     setConfirmPopupOpen(true);
+  }
+
+  useEffect(() => {
+    if(loggedIn) {
+      Promise.all([api.getUserData(), api.getCards()])
+        .then(([userData, cards]) => {
+          setCurrentUser(userData);
+          setCards(cards);
+        })
+        .catch((err) => {
+          console.log('Ошибка', err);
+        })
+      handleToken();
+    }
+  },[loggedIn])
+
+  function handleToken() {
+    const jwt = localStorage.getItem('jwt');
+    if (jwt) {
+      authApi.checkToken(jwt)
+        .then((res) => {
+            setLoggedIn(true);
+            setEmail(res.email);
+            history.push('/');
+        })
+        .catch((err) => {
+          console.log('Ошибка', err);
+        })
+    }
   }
 
   function handleUpdateUserInfo(data) {
@@ -153,8 +182,8 @@ function App() {
       .then(({ token }) => {
         api.setToken(token)
         // localStorage.setItem('jwt', token);
-        setEmail(data.email);
         setLoggedIn(true);
+        setEmail(data.email);
         history.push('/');
       })
       .catch((err) =>{
@@ -169,37 +198,6 @@ function App() {
     history.push('/sign-in');
     setLoggedIn(false);
   }
-
-  function handleToken() {
-    const token = localStorage.getItem('jwt');
-    if (token) {
-      authApi.checkToken(token)
-        .then((res) => {
-          if (res) {
-            setEmail(res.email);
-            setLoggedIn(true);
-            history.push('/');
-          }
-        })
-        .catch((err) => {
-          console.log('Ошибка', err);
-        })
-    }
-  }
-
-  useEffect(() => {
-    if(loggedIn) {
-      Promise.all([api.getUserData(), api.getCards()])
-        .then(([userData, cards]) => {
-          setCurrentUser(userData);
-          setCards(cards);
-        })
-        .catch((err) => {
-          console.log('Ошибка', err);
-        })
-      handleToken();
-    }
-  },[loggedIn])
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -220,9 +218,6 @@ function App() {
          </Route>
          <Route path="/sign-in">
            <Login onLogin={handleAuthorization}/>
-         </Route>
-         <Route exact path="/">
-           {loggedIn ? <Redirect to="/"/> : <Redirect to="/sign-in"/> }
          </Route>
        </Switch>
         <Footer />
