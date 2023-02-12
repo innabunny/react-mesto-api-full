@@ -8,7 +8,7 @@ const NotFoundError = require('../errors/NotFoundError');
 
 module.exports.getCards = (req, res, next) => {
   cardSchema.find({})
-    .populate('owner', 'likes')
+    // .populate('owner', 'likes')
     .then((cards) => {
       res.send(cards);
     })
