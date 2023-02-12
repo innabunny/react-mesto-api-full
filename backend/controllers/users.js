@@ -113,7 +113,7 @@ module.exports.login = (req, res, next) => {
       return bcrypt.compare(password, user.password)
         .then((matched) => {
           if (!matched) {
-            next(new UnauthorizedError('Неправильные почта или пароль'));
+            throw new UnauthorizedError('Неправильные почта или пароль');
           }
           const token = jwt.sign(
             { _id: user._id },

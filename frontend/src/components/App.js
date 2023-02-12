@@ -128,6 +128,7 @@ function App() {
       .deleteCard(card._id)
       .then(() => {
         setCards((items) => items.filter((c) => c._id !== card._id));
+        // setCards((items) => items.filter((c) => c !== card));
         closeAllPopups();
       })
       .catch((err) => {
